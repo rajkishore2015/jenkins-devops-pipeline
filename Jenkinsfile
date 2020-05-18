@@ -20,9 +20,9 @@ pipeline{
 	agent any
 	// agent{docker{image 'maven:3.6.3'}}
 	environment{
-		dockerHome= tool 'myDocker'
-		mavenHome= tool 'myMaven'
-		PATH= "$dockerHome/bin;$mavenHome/bin;$PATH;"
+		dockerHome = tool 'myDocker'
+		mavenHome = tool 'myMaven'
+		PATH = "$dockerHome/bin;$mavenHome/bin;$PATH;"
 	}
 	stages{
 		stage('Checkout') {
@@ -56,15 +56,30 @@ pipeline{
 			}
 			
 		}
+		stage('Package') {
+			steps{
+				echo "mvn package -DskipTests"
+			}
+			
+		}
 		stage('Build Docker Image') {
 			steps{
-				echo "mvn failsafe:integration-test failsafe:verify"
+				// docker build  -t rkishore2019/currency-exchange-devops:$env.BUILD_TAG
+				script{
+					dockerImage = docker.build("rkishore2019/currency-exchange-devops:${env.BUILD_TAG}")
+				}
 			}
 			
 		}
 		stage('Push Docker Image') {
 			steps{
-				echo "mvn failsafe:integration-test failsafe:verify"
+				script{
+					docker.withRegistry('','dockerhub'){
+						dockerImage.Push();
+						dockerImage.Push('latest');
+
+				}
+				}
 			}
 			
 		}
