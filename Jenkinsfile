@@ -48,5 +48,8 @@ pipeline{
 		failure{
 			echo " I run always when failure"
 		}
+		changed{
+			echo " I run always when changed"
+		}
 	}
 }
