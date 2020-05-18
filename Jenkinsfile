@@ -85,6 +85,22 @@ pipeline{
 			}
 			
 		}
+
+		stage('Run Docker Image') {
+			steps{
+				script{
+					docker.withRegistry('','dockerhub'){
+						dockerImage.pull();
+						dockerImage.push('latest');
+
+					}
+
+				}
+				 sh "docker run -d --rm -p $httpPort:$httpPort --name $containerName $dockerHubUser/$containerName:$tag"
+    			echo "Application started on port: ${httpPort} (http)"
+			}
+			
+		}
 	}
 	post{
 		always{
