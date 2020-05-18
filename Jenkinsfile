@@ -91,13 +91,12 @@ pipeline{
 				script{
 					docker.withRegistry('','dockerhub'){
 						dockerImage.pull();
-						dockerImage.push('latest');
-
+						
 					}
-
+				sh "docker run -d --rm -p 8000:8000 --name currency-exchange-devops rkishore2019/currency-exchange-devops:${env.BUILD_TAG}"
+    			echo "Application started on port: 8000 (http)"
 				}
-				 sh "docker run -d --rm -p $httpPort:$httpPort --name $containerName $dockerHubUser/$containerName:$tag"
-    			echo "Application started on port: ${httpPort} (http)"
+				 
 			}
 			
 		}
