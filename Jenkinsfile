@@ -67,7 +67,8 @@ pipeline{
 			steps{
 				// docker build  -t rkishore2019/currency-exchange-devops:$env.BUILD_TAG
 				script{
-					$env.dockerImage = docker.build("rkishore2019/currency-exchange-devops:${env.BUILD_TAG}")
+					env.dockerImage = docker.build("rkishore2019/currency-exchange-devops:${env.BUILD_TAG}")
+					
 				}
 			}
 			
@@ -76,8 +77,8 @@ pipeline{
 			steps{
 				script{
 					docker.withRegistry('','dockerhub'){
-						$env.dockerImage.Push();
-						$env.dockerImage.Push('latest');
+						${env.dockerImage}.Push();
+						${env.dockerImage}.Push('latest');
 
 					}
 				}
