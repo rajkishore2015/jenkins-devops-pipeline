@@ -22,6 +22,7 @@ pipeline{
 	environment{
 		dockerHome = tool 'myDocker'
 		mavenHome = tool 'myMaven'
+		dockerImage = ''
 		PATH= "$dockerHome/bin:$mavenHome/bin:$PATH:"
 	}
 	stages{
@@ -66,7 +67,7 @@ pipeline{
 			steps{
 				// docker build  -t rkishore2019/currency-exchange-devops:$env.BUILD_TAG
 				script{
-					dockerImage = docker.build("rkishore2019/currency-exchange-devops:${env.BUILD_TAG}")
+					$env.dockerImage = docker.build("rkishore2019/currency-exchange-devops:${env.BUILD_TAG}")
 				}
 			}
 			
@@ -75,10 +76,10 @@ pipeline{
 			steps{
 				script{
 					docker.withRegistry('','dockerhub'){
-						dockerImage.Push();
-						dockerImage.Push('latest');
+						$env.dockerImage.Push();
+						$env.dockerImage.Push('latest');
 
-				}
+					}
 				}
 			}
 			
