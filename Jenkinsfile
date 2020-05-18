@@ -42,7 +42,7 @@ pipeline{
 		}
 		stage('Compile') {
 			steps{
-				sh "mvn clean compile"
+				sh "mvn clean install compile"
 			}
 		}
 		stage('Test') {
@@ -58,7 +58,7 @@ pipeline{
 		}
 		stage('Package') {
 			steps{
-				echo "mvn package -DskipTests"
+				echo "mvn clean package -DskipTests"
 			}
 			
 		}
