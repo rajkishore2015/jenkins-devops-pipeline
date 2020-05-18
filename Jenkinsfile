@@ -22,10 +22,10 @@ pipeline{
 	environment{
 		dockerHome= tool 'myDocker'
 		mavenHome= tool 'myMaven'
-		PATH= "$PATH;$dockerHome/bin;$mavenHome/bin;"
+		PATH= "$dockerHome/bin;$mavenHome/bin;$PATH;"
 	}
 	stages{
-		stage('Build') {
+		stage('Checkout') {
 			steps{
 				sh "mvn --version"
 				sh "dccker --version"
@@ -40,15 +40,31 @@ pipeline{
 			}
 			
 		}
+		stage('Compile') {
+			steps{
+				sh "mvn clean compile"
+			}
+		}
 		stage('Test') {
 			steps{
-				echo "Test"
+				sh "mvn test"
 			}
-			
 		}
 		stage('IntegrationTest') {
 			steps{
-				echo "IntTest"
+				echo "mvn failsafe:integration-test failsafe:verify"
+			}
+			
+		}
+		stage('Build Docker Image') {
+			steps{
+				echo "mvn failsafe:integration-test failsafe:verify"
+			}
+			
+		}
+		stage('Push Docker Image') {
+			steps{
+				echo "mvn failsafe:integration-test failsafe:verify"
 			}
 			
 		}
