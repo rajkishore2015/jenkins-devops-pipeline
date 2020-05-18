@@ -22,9 +22,9 @@ pipeline{
 	
 	stages{
 		stage('Initialize'){
-		dockerHome = tool 'myDocker'
-		mavenHome = tool 'myMaven'
-		PATH = "$dockerHome/bin;$mavenHome/bin;$PATH;"
+		def dockerHome = tool 'myDocker'
+    def mavenHome  = tool 'myMaven'
+	env.PATH = "${dockerHome}/bin:${mavenHome}/bin:${env.PATH}"
 	}
 		stage('Checkout') {
 			steps{
