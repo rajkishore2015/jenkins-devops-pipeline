@@ -16,17 +16,17 @@ pipeline {
 		stage('Checkout') {
 			steps {
 				echo "OS: %{os}%"
-				if(os.contains("linux")){
-				sh 'mvn --version'
-				sh 'docker version'
-				echo "Build"
-				echo "PATH - $PATH"
-				echo "BUILD_NUMBER - $env.BUILD_NUMBER"
-				echo "BUILD_ID - $env.BUILD_ID"
-				echo "JOB_NAME - $env.JOB_NAME"
-				echo "BUILD_TAG - $env.BUILD_TAG"
-				echo "BUILD_URL - $env.BUILD_URL"
-				}else{
+				//if(os.contains("linux")){
+				//sh 'mvn --version'
+				//sh 'docker version'
+				//echo "Build"
+				//echo "PATH - $PATH"
+				//echo "BUILD_NUMBER - $env.BUILD_NUMBER"
+				//echo "BUILD_ID - $env.BUILD_ID"
+				//echo "JOB_NAME - $env.JOB_NAME"
+				//echo "BUILD_TAG - $env.BUILD_TAG"
+				//echo "BUILD_URL - $env.BUILD_URL"
+				//}else{
 				bat 'mvn --version'
 				bat 'docker version'
 					echo "PATH -%PATH%"
@@ -35,46 +35,46 @@ pipeline {
 				        echo "JOB_NAME - %env.JOB_NAME%"
 				        echo "BUIL_TAG - %env.BUILD_TAG%"
 				        echo "BUIL_URL - %env.BUILD_URL%"
-				}
+				//}
 			}
 		}
 		stage('Compile') {
 			steps {
-				if(os.contains("linux")){
-				sh "mvn clean compile"
-				}else{
+				//if(os.contains("linux")){
+				//sh "mvn clean compile"
+				//}else{
 					bat "mvn clean compile"
-				}
+				//}
 			}
 		}
 
 		stage('Test') {
 			steps {
-				if(os.contains("linux")){
-				sh "mvn test"
-				}else{
+				//if(os.contains("linux")){
+				//sh "mvn test"
+				//}else{
 					bat "mvn test"
-				}
+				//}
 			}
 		}
 
 		stage('Integration Test') {
 			steps {
-				if(os.contains("linux")){
-				sh "mvn failsafe:integration-test failsafe:verify"
-				}else{
+				//if(os.contains("linux")){
+				//sh "mvn failsafe:integration-test failsafe:verify"
+				//}else{
 					bat "mvn failsafe:integration-test failsafe:verify"
-				}
+				//}
 			}
 		}
 
 		stage('Package') {
 			steps {
-				if(os.contains("linux")){
-				sh "mvn package -DskipTests"
-				}else{
+				//if(os.contains("linux")){
+				//sh "mvn package -DskipTests"
+				//}else{
 					bat "mvn package -DskipTests"
-				}
+				//}
 			}
 		}
 
@@ -105,13 +105,13 @@ pipeline {
 						dockerImage.pull();
 						
 					}
-					if(os.contains("linux")){
-				sh "docker run -d --rm -p 8000:8000 --name currency-exchange-devops rkishore2019/currency-exchange-devops:${env.BUILD_TAG}"
-    			echo "Application started on port: 8000 (http)"
-					}else{
+				//	if(os.contains("linux")){
+				//sh "docker run -d --rm -p 8000:8000 --name currency-exchange-devops rkishore2019/currency-exchange-devops:${env.BUILD_TAG}"
+    			//echo "Application started on port: 8000 (http)"
+			//		}else{
 						bat "docker run -d --rm -p 8000:8000 --name currency-exchange-devops rkishore2019/currency-exchange-devops:${env.BUILD_TAG}"
     			echo "Application started on port: 8000 (http)"
-					}
+			//		}
 				}
 				 
 			}
