@@ -80,7 +80,7 @@ pipeline {
 
 		stage('Build Docker Image') {
 			steps {
-				//docker build -t rkishore2019/currency-exchange-devops:0.0.1-SNAPSHOT
+				bat "docker build -t rkishore2019/currency-exchange-devops:0.0.1-SNAPSHOT"
 				script {
 					dockerImage = docker.build("rkishore2019/currency-exchange-devops:0.0.1-SNAPSHOT")
 				}
