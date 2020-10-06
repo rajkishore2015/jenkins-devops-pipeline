@@ -24,6 +24,7 @@ pipeline{
 		mavenHome = tool 'myMaven'
 		dockerImage = ''
 		PATH= "$dockerHome/bin:$mavenHome/bin:$PATH:"
+		echo "PATH -$PATH "
 	}
 	stages{
 		stage('Checkout') {
