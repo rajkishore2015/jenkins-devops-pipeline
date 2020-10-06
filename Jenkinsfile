@@ -9,7 +9,7 @@ pipeline {
 		dockerHome = tool 'myDocker'
 		mavenHome = tool 'myMaven'
 		PATH = "$dockerHome/bin:$mavenHome/bin:$PATH"
-		def os= System.properties['os.name'].toLowerCase();
+		//def os= System.properties['os.name'].toLowerCase();
 	}
 
 	stages {
