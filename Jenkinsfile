@@ -8,8 +8,9 @@ pipeline {
 	environment {
 		dockerHome = tool 'myDocker'
 		mavenHome = tool 'myMaven'
-		docker= tool 'myDocker'
-		PATH = "$dockerHome/bin:$mavenHome/bin:$PATH"
+		//docker= tool 'myDocker'
+		PATH = "%dockerHome%/bin:%mavenHome%/bin:%PATH%"
+		echo "%path%"
 		//def os= System.properties['os.name'].toLowerCase();
 	}
 
