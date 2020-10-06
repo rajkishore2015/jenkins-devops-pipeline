@@ -16,33 +16,6 @@
 	
 // }
 
-pipeline{
-	agent any
-	// agent{docker{image 'maven:3.6.3'}}
-	environment{
-		dockerHome = tool 'myDocker'
-		mavenHome = tool 'myMaven'
-		dockerImage = ''
-		PATH= "$dockerHome/bin:$mavenHome/bin:$PATH:"
-		def os= System.properties['os.name'].toLowerCase();
-		
-		//echo "PATH -$PATH "// node {
-// 	stage('Build') {
-// 		echo "Build"
-// 	}
-// 	stage('Test') {
-// 		echo "Test"
-// 	}
-// 	stage('IntegrationTest') {
-// 		echo "IntTest"
-// 	}
-// }
-// node {
-// 		echo "Build"
-// 		echo "Test"
-// 		echo "IntTest"
-	
-// }
 
 pipeline{
 	agent any
@@ -60,8 +33,7 @@ pipeline{
 		stage('Checkout') {
 			steps{
 				echo "OS: %{os}%"
-                if(os.contains("linux))
-                {
+                	if(os.contains("linux")){
 					sh "mvn --version"
 				    sh "docker --version"
 				    echo "Build"
@@ -72,8 +44,7 @@ pipeline{
 				    echo "JOB_NAME - $env.JOB_NAME"
 				    echo "BUIL_TAG - $env.BUILD_TAG"
 				    echo "BUIL_URL - $env.BUILD_URL"
-	       		}
-				else{
+	       		}else{
                         bat "mvn --version"
 			        	bat "docker --version"						       
 				        echo "PATH -%PATH%"
@@ -82,14 +53,13 @@ pipeline{
 				        echo "JOB_NAME - %env.JOB_NAME%"
 				        echo "BUIL_TAG - %env.BUILD_TAG%"
 				        echo "BUIL_URL - %env.BUILD_URL%"
-				}
+			 }
 			}
 			
 		}
 		stage('Compile') {
 			steps{
-				    if(os.contains("linux))
-                    {
+				    if(os.contains("linux")){
 					    sh "mvn clean install compile"
 			    	}
 				    else{
@@ -99,7 +69,7 @@ pipeline{
 		}
 		stage('Test') {
 			steps{
-				    if(os.contains("linux))
+				    if(os.contains("linux"))
                     {
 					    sh "mvn test"
 				    }
@@ -112,7 +82,7 @@ pipeline{
 		stage('IntegrationTest') {
 			steps{
 				    echo "mvn failsafe:integration-test failsafe:verify"
-				if(os.contains("linux)){
+				if(os.contains("linux")){
 					sh "mvn failsafe:integration-test failsafe:verify"
 				}
 				else{
@@ -125,7 +95,7 @@ pipeline{
 			steps{
 				echo "mvn clean package -DskipTests"
 				
-				    if(os.contains("linux))
+				    if(os.contains("linux"))
                     {
 					    sh "mvn clean package -DskipTests"
 				    }
