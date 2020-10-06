@@ -31,7 +31,7 @@ pipeline{
 	stages{
 		stage('Checkout') {
 			steps{
-				echo "OS: ${os}"
+				echo "OS: %{os}%"
 				if(os.contains("linux)){
 				sh "mvn --version"
 				sh "docker --version"
@@ -120,13 +120,11 @@ pipeline{
 					docker.withRegistry('','dockerhub'){
 						dockerImage.push();
 						dockerImage.push('latest');
-
 					}
 				}
 			}
 			
 		}
-
 		stage('Run Docker Image') {
 			steps{
 				script{
