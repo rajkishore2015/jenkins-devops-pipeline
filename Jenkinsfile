@@ -24,17 +24,15 @@ pipeline{
 		mavenHome = tool 'myMaven'
 		dockerImage = ''
 		PATH= "$dockerHome/bin:$mavenHome/bin:$PATH:"
+		def os= System.properties['os.name'].toLowerCase();
+		
 		//echo "PATH -$PATH "
 	}
 	stages{
 		stage('Checkout') {
 			steps{
-				echo "PATH -%PATH%"
-				echo "BUILD_NUMBER - %env.BUILD_NUMBER%"
-				echo "BUILD_ID - %env.BUILD_ID%"
-				echo "JOB_NAME - %env.JOB_NAME%"
-				echo "BUIL_TAG - %env.BUILD_TAG%"
-				echo "BUIL_URL - %env.BUILD_URL%"
+				echo "OS: ${os}"
+				if(os.contains("linux)){
 				sh "mvn --version"
 				sh "docker --version"
 				echo "Build"
@@ -45,29 +43,64 @@ pipeline{
 				echo "JOB_NAME - $env.JOB_NAME"
 				echo "BUIL_TAG - $env.BUILD_TAG"
 				echo "BUIL_URL - $env.BUILD_URL"
-
+	       
+				}
+				else{
+                                bat "mvn --version"
+				bat "docker --version"						       
+				echo "PATH -%PATH%"
+				echo "BUILD_NUMBER - %env.BUILD_NUMBER%"
+				echo "BUILD_ID - %env.BUILD_ID%"
+				echo "JOB_NAME - %env.JOB_NAME%"
+				echo "BUIL_TAG - %env.BUILD_TAG%"
+				echo "BUIL_URL - %env.BUILD_URL%"
+				}
 			}
 			
 		}
 		stage('Compile') {
 			steps{
-				sh "mvn clean install compile"
+				if(os.contains("linux)){
+					sh "mvn clean install compile"
+				}
+				else{
+					bat "mvn clean install compile"						       
+				}		       
 			}
 		}
 		stage('Test') {
 			steps{
-				sh "mvn test"
+				if(os.contains("linux)){
+					sh "mvn test"
+				}
+				else{
+					bat "mvn test"
+				}	
+				
 			}
 		}
 		stage('IntegrationTest') {
 			steps{
 				echo "mvn failsafe:integration-test failsafe:verify"
+				if(os.contains("linux)){
+					sh "mvn failsafe:integration-test failsafe:verify"
+				}
+				else{
+					bat "mvn failsafe:integration-test failsafe:verify"
+				}
 			}
 			
 		}
 		stage('Package') {
 			steps{
 				echo "mvn clean package -DskipTests"
+				
+				if(os.contains("linux)){
+					sh "mvn clean package -DskipTests"
+				}
+				else{
+					bat "mvn clean package -DskipTests"
+				}
 			}
 			
 		}
