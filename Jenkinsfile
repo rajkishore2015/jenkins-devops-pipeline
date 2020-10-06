@@ -32,8 +32,8 @@ pipeline{
 		stage('Checkout') {
 			steps{
 				echo "OS: %{os}%"
-				if(os.contains("linux)){
-				sh "mvn --version"
+					if(os.contains("linux)){
+					sh "mvn --version"
 				sh "docker --version"
 				echo "Build"
 				echo "PATH -$PATH "
