@@ -8,6 +8,7 @@ pipeline {
 	environment {
 		dockerHome = tool 'myDocker'
 		mavenHome = tool 'myMaven'
+		docker= tool 'myDocker'
 		PATH = "$dockerHome/bin:$mavenHome/bin:$PATH"
 		//def os= System.properties['os.name'].toLowerCase();
 	}
@@ -80,7 +81,7 @@ pipeline {
 
 		stage('Build Docker Image') {
 			steps {
-				bat "docker build -t rkishore2019/currency-exchange-devops:0.0.1-SNAPSHOT"
+				//bat "docker build -t rkishore2019/currency-exchange-devops:0.0.1-SNAPSHOT"
 				script {
 					dockerImage = docker.build("rkishore2019/currency-exchange-devops:0.0.1-SNAPSHOT")
 				}
