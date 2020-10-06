@@ -80,9 +80,9 @@ pipeline {
 
 		stage('Build Docker Image') {
 			steps {
-				//"docker build -t rkishore2019/currency-exchange-devops:$env.BUILD_TAG"
+				docker build -t rkishore2019/currency-exchange-devops:0.0.1-SNAPSHOT
 				script {
-					dockerImage = docker.build("rkishore2019/currency-exchange-devops:${env.BUILD_TAG}")
+					dockerImage = docker.build("rkishore2019/currency-exchange-devops:0.0.1-SNAPSHOT")
 				}
 
 			}
@@ -106,10 +106,10 @@ pipeline {
 						
 					}
 				//	if(os.contains("linux")){
-				//sh "docker run -d --rm -p 8000:8000 --name currency-exchange-devops rkishore2019/currency-exchange-devops:${env.BUILD_TAG}"
+				//sh "docker run -d --rm -p 8000:8000 --name currency-exchange-devops rkishore2019/currency-exchange-devops:0.0.1-SNAPSHOT"
     			//echo "Application started on port: 8000 (http)"
 			//		}else{
-						bat "docker run -d --rm -p 8000:8000 --name currency-exchange-devops rkishore2019/currency-exchange-devops:${env.BUILD_TAG}"
+						bat "docker run -d --rm -p 8000:8000 --name currency-exchange-devops rkishore2019/currency-exchange-devops:0.0.1-SNAPSHOT"
     			echo "Application started on port: 8000 (http)"
 			//		}
 				}
